@@ -1,20 +1,20 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE rfc SYSTEM "rfc2629-xhtml.ent">
 
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" 
-number="8816" 
-docName="draft-ietf-stir-oob-07" 
-ipr="trust200902" 
-obsoletes="" 
-updates="" 
-submissionType="IETF" 
-category="info" 
-consensus="true" 
-xml:lang="en" 
-tocInclude="true" 
-tocDepth="4" 
-symRefs="true" 
-sortRefs="true" 
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude"
+number="8816"
+docName="draft-ietf-stir-oob-07"
+ipr="trust200902"
+obsoletes=""
+updates=""
+submissionType="IETF"
+category="info"
+consensus="true"
+xml:lang="en"
+tocInclude="true"
+tocDepth="4"
+symRefs="true"
+sortRefs="true"
 version="3">
 
   <!-- xml2rfc v2v3 conversion 2.41.0 -->
@@ -45,15 +45,15 @@ version="3">
     <date month="August" year="2020"/>
     <keyword>SIP</keyword>
     <abstract>
-      <t>The Personal Assertion Token (PASSporT) format defines 
-a token that can be carried by signaling protocols, including SIP, 
+      <t>The Personal Assertion Token (PASSporT) format defines
+a token that can be carried by signaling protocols, including SIP,
 to cryptographically attest the identity of callers.
 However, not all telephone calls use Internet signaling protocols,
 and some calls use them for only part of their signaling
-path, while some cannot reliably deliver SIP header fields end-to-end. 
-This document describes use cases that require the delivery of 
-PASSporT objects outside of the signaling path, and defines 
-architectures and semantics to provide 
+path, while some cannot reliably deliver SIP header fields end-to-end.
+This document describes use cases that require the delivery of
+PASSporT objects outside of the signaling path, and defines
+architectures and semantics to provide
 this functionality.
       </t>
     </abstract>
@@ -62,16 +62,16 @@ this functionality.
     <section numbered="true" toc="default">
       <name>Introduction</name>
 
-      <t>The STIR problem statement <xref target="RFC7340" format="default"/> 
-describes widespread problems enabled by impersonation in the telephone network, 
+      <t>The STIR problem statement <xref target="RFC7340" format="default"/>
+describes widespread problems enabled by impersonation in the telephone network,
 including illegal robocalling, voicemail hacking, and swatting.
-As telephone services are increasingly migrating onto the Internet, 
-and using Voice over IP (VoIP) protocols such as <xref target="RFC3261" format="default">SIP</xref>, 
-it is necessary for these protocols to support stronger identity mechanisms to prevent impersonation. 
-For example, <xref target="RFC8224" format="default"/> defines a SIP Identity header field 
+As telephone services are increasingly migrating onto the Internet,
+and using Voice over IP (VoIP) protocols such as <xref target="RFC3261" format="default">SIP</xref>,
+it is necessary for these protocols to support stronger identity mechanisms to prevent impersonation.
+For example, <xref target="RFC8224" format="default"/> defines a SIP Identity header field
 capable of carrying <xref target="RFC8225" format="default">PASSporT objects</xref>
-in SIP as a means to cryptographically attest that the originator of a 
-telephone call is authorized to use the calling party number (or, for native SIP cases, 
+in SIP as a means to cryptographically attest that the originator of a
+telephone call is authorized to use the calling party number (or, for native SIP cases,
 SIP URI) associated with the originator of the call.
       </t>
       <t>Not all telephone calls use SIP today, however, and even those that do use SIP do not always carry SIP signaling end-to-end.
@@ -80,16 +80,16 @@ SIP URI) associated with the originator of the call.
       </t>
       <ol spacing="normal" type="1">
         <li>
-	One or both of the endpoints is actually a PSTN endpoint.
-	 </li>
+        One or both of the endpoints is actually a PSTN endpoint.
+         </li>
         <li>Both of the endpoints are non-PSTN (SIP, Jingle, etc.) but the call transits the PSTN at some point.
-	 </li>
+         </li>
         <li>Non-PSTN calls that do not transit the PSTN at all (such as native SIP end-to-end calls).
-	</li>
+        </li>
       </ol>
       <t>The first two categories represent the  majority of telephone calls associated with problems like illegal robocalling: many robocalls today originate on the Internet but terminate at PSTN endpoints.
    However, the core network elements that operate the PSTN are legacy devices that
-   are unlikely to be upgradable at this point to support an in-band authentication system.  
+   are unlikely to be upgradable at this point to support an in-band authentication system.
    As such, those devices largely cannot be modified to pass signatures originating on the Internet -- or indeed any in-band signaling
    data -- intact.  Even if fields for tunneling arbitrary data can be found in traditional PSTN signaling, in some cases legacy elements would strip the signatures from those fields; in
    others, they might damage them to the point where they cannot be
@@ -111,7 +111,7 @@ SIP URI) associated with the originator of the call.
       <t> This capability also provides an ideal transitional technology while in-band STIR adoption is ramping up. It permits early adopters to use the technology even when intervening network
 elements are not yet STIR-aware, and through various kinds of gateways, it may allow providers with a significant PSTN investment to still secure their calls with STIR.
       </t>
-      <t>The techniques described in this document therefore build on the 
+      <t>The techniques described in this document therefore build on the
 <xref target="RFC8225" format="default">PASSporT</xref> mechanism and the work of <xref target="RFC8224" format="default"/> to describe a way that
 a PASSporT object created in the originating network of a call can reach the terminating network even when it cannot be carried end-to-end in-band in the call signaling. This relies on
 a new service defined in this document called a Call Placement Service (CPS) that permits the PASSporT object to be stored during call processing and retrieved for verification purposes.
@@ -130,7 +130,7 @@ Various environments may have their own security requirements: a public deployme
     The key words "<bcp14>MUST</bcp14>", "<bcp14>MUST NOT</bcp14>", "<bcp14>REQUIRED</bcp14>", "<bcp14>SHALL</bcp14>", "<bcp14>SHALL
     NOT</bcp14>", "<bcp14>SHOULD</bcp14>", "<bcp14>SHOULD NOT</bcp14>", "<bcp14>RECOMMENDED</bcp14>", "<bcp14>NOT RECOMMENDED</bcp14>",
     "<bcp14>MAY</bcp14>", and "<bcp14>OPTIONAL</bcp14>" in this document are to be interpreted as
-    described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> 
+    described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/>
     when, and only when, they appear in all capitals, as shown here.
         </t>
     </section>
@@ -173,7 +173,7 @@ Various environments may have their own security requirements: a public deployme
                           \           /
                            +---------+
 ]]></artwork>
-      <t>In such a case, Alice might have an analog (e.g., PSTN) connection to her 
+      <t>In such a case, Alice might have an analog (e.g., PSTN) connection to her
    gateway or switch that is responsible for her identity.  Similarly, the gateway
    would verify Alice's identity, generate the right calling party number
    information, and provide that number to Bob using ordinary
@@ -185,7 +185,7 @@ Various environments may have their own security requirements: a public deployme
       <t>Because in these operating environments, endpoints cannot pass cryptographic information to one another directly
   through signaling, any solution must
    involve some rendezvous mechanism to allow endpoints to communicate.
-   We call this rendezvous service a Call Placement Service (CPS), a service where a record of call placement, 
+   We call this rendezvous service a Call Placement Service (CPS), a service where a record of call placement,
    in this case a PASSporT, can be stored for future retrieval.  In
    principle, this service could communicate any information, but minimally we
    expect it to include a full-form PASSporT that attests
@@ -194,11 +194,11 @@ Various environments may have their own security requirements: a public deployme
    the asserted origin of that call.  (See <xref target="lookup" format="default"/> for limitations of
    this design.)
       </t>
-      <t>This architecture does not mandate that any particular sort 
+      <t>This architecture does not mandate that any particular sort
 of entity operate a CPS or mandate any means to discover a CPS. A CPS
-could be run internally within a network or made publicly available. 
+could be run internally within a network or made publicly available.
 One or more CPSes could be run by a carrier, as repositories for PASSporTs
-for calls sent to its customers, or a CPS could be built into an enterprise 
+for calls sent to its customers, or a CPS could be built into an enterprise
 PBX or even a smartphone. To the degree possible, it is
 specified here generically as an idea that may have applicability to a variety of STIR deployments.
       </t>
@@ -209,11 +209,11 @@ specified here generically as an idea that may have applicability to a variety o
         <li>The callee registers with the CPS.  When the caller wishes to
       place a call to the callee, it sends the PASSporT to the CPS, which immediately
       forwards it to the callee.
-	  	 </li>
+                 </li>
         <li>The caller stores the PASSporT with the CPS at the time of call
       placement.  When the callee receives the call, it contacts the CPS
       and retrieves the PASSporT.
-	</li>
+        </li>
       </ol>
       <t>While the first architecture is roughly isomorphic to current VoIP
    protocols, it shares their drawbacks.  Specifically, the callee must
@@ -221,7 +221,7 @@ specified here generically as an idea that may have applicability to a variety o
    channel.  This comes with the usual networking costs to the callee
    and is especially problematic for mobile endpoints. Indeed, if the endpoints had the capabilities
    to implement such an architecture, they could surely just use SIP or some other
-   protocol to set up a secure session; even if the media were going through the traditional PSTN, a 
+   protocol to set up a secure session; even if the media were going through the traditional PSTN, a
    "shadow" SIP session could convey the PASSporT. Thus, we focus
    on the second architecture in which the PSTN incoming call serves as
    the notification channel, and the callee can then contact the CPS to
@@ -231,7 +231,7 @@ specified here generically as an idea that may have applicability to a variety o
     </section>
     <section anchor="uses" numbered="true" toc="default">
       <name>Use Cases</name>
-      <t>The following are the motivating use cases for this mechanism. Bear in mind that, 
+      <t>The following are the motivating use cases for this mechanism. Bear in mind that,
 just as in <xref target="RFC8224" format="default"/>, there may be multiple Identity header fields in a single SIP
 INVITE, so there may be multiple PASSporTs in this out-of-band mechanism associated with a single call. For example, a SIP user agent might create a PASSporT for a call with an end-user
 credential, and as the call exits the originating administrative domain,
@@ -244,59 +244,59 @@ in the processing of a single call.
 in band in the call per <xref target="RFC8224" format="default"/>. The call is routed out of the originating administrative domain and reaches a gateway to the PSTN.
 Eventually, the call will terminate on a mobile smartphone that supports this out-of-band mechanism.
         </t>
-        <t>In this use case, the originating authentication service 
+        <t>In this use case, the originating authentication service
 can store the PASSporT with the appropriate CPS (per the practices of
-<xref target="cps" format="default"/>) for the target telephone number 
-as a fallback in case SIP signaling will not reach end-to-end. When 
-the destination mobile smartphone receives the call over the PSTN, it 
+<xref target="cps" format="default"/>) for the target telephone number
+as a fallback in case SIP signaling will not reach end-to-end. When
+the destination mobile smartphone receives the call over the PSTN, it
 consults the CPS and discovers a PASSporT from the originating telephone number waiting for it.
 It uses this PASSporT to verify the calling party number.
         </t>
       </section>
       <section anchor="case-pstn-pstn-gw" numbered="true" toc="default">
         <name>Case 2: Two Smart PSTN Endpoints</name>
-        <t>A call originates with an enterprise PBX that has both 
-Internet access and a built-in gateway to the PSTN, which communicates 
-through traditional telephone signaling protocols.  
-The PBX immediately routes the call to the PSTN, but before it does, 
+        <t>A call originates with an enterprise PBX that has both
+Internet access and a built-in gateway to the PSTN, which communicates
+through traditional telephone signaling protocols.
+The PBX immediately routes the call to the PSTN, but before it does,
 it provisions a PASSporT on the CPS associated with the target telephone number.
         </t>
         <t>After normal PSTN routing, the call lands on a smart mobile handset that supports the STIR out-of-band mechanism. It queries the appropriate CPS over the Internet to determine if a call has been placed to it
-by a STIR-aware device. It finds the PASSporT provisioned by the 
+by a STIR-aware device. It finds the PASSporT provisioned by the
 enterprise PBX and uses it to verify the calling party number.
         </t>
       </section>
       <section anchor="case-pstn-ip" numbered="true" toc="default">
         <name>Case 3: PSTN to VoIP Call</name>
-        <t>A call originates with an enterprise PBX that has both 
-Internet access and a built-in gateway to the PSTN. It will immediately 
+        <t>A call originates with an enterprise PBX that has both
+Internet access and a built-in gateway to the PSTN. It will immediately
 route the call to the PSTN, but before it does, it provisions
-a PASSporT with the CPS associated with the target telephone number. 
-However, it turns out that the call will eventually route through 
+a PASSporT with the CPS associated with the target telephone number.
+However, it turns out that the call will eventually route through
 the PSTN to an Internet gateway, which will translate this into a SIP
 call and deliver it to an administrative domain with a STIR verification service.
         </t>
-        <t>In this case, there are two subcases for how the PASSporT 
-might be retrieved. In subcase 1, the Internet gateway that receives 
-the call from the PSTN could query the appropriate CPS to determine 
+        <t>In this case, there are two subcases for how the PASSporT
+might be retrieved. In subcase 1, the Internet gateway that receives
+the call from the PSTN could query the appropriate CPS to determine
 if the original caller created and provisioned a PASSporT for this call. If so,
-it can retrieve the PASSporT and, when it creates a SIP INVITE for 
-this call, add a corresponding Identity header field per 
+it can retrieve the PASSporT and, when it creates a SIP INVITE for
+this call, add a corresponding Identity header field per
 <xref target="RFC8224" format="default"/>. When the SIP INVITE reaches
-the destination administrative domain, it will be able to verify the 
-PASSporT normally. Note that to avoid discrepancies with the Date 
-header field value, only a full-form PASSporT should be used for this purpose. In 
-subcase 2, the gateway does not retrieve the PASSporT itself, but 
-instead the verification service at the destination administrative 
+the destination administrative domain, it will be able to verify the
+PASSporT normally. Note that to avoid discrepancies with the Date
+header field value, only a full-form PASSporT should be used for this purpose. In
+subcase 2, the gateway does not retrieve the PASSporT itself, but
+instead the verification service at the destination administrative
 domain does so. Subcase 1 would perhaps be valuable for deployments where
 the destination administrative domain supports in-band STIR but not out-of-band STIR.
         </t>
       </section>
       <section anchor="case-gateways" numbered="true" toc="default">
         <name>Case 4: Gateway Out-of-Band</name>
-        <t>A call originates in the SIP world in a STIR-aware administrative domain. 
+        <t>A call originates in the SIP world in a STIR-aware administrative domain.
 The local authentication service for that administrative domain creates a PASSporT that is carried
-in band in the call per <xref target="RFC8224" format="default"/>. The call is routed 
+in band in the call per <xref target="RFC8224" format="default"/>. The call is routed
 out of the originating administrative domain and eventually reaches a gateway to the PSTN.
         </t>
         <t>In this case, the originating authentication service does not support the out-of-band mechanism, so instead the gateway to the PSTN extracts the PASSporT from the SIP request and provisions it to the CPS. (When the call reaches the gateway to the PSTN, the gateway might first check the CPS to see if a PASSporT object had already been provisioned for this call, and only provision a PASSporT if none is present).
@@ -308,152 +308,152 @@ out of the originating administrative domain and eventually reaches a gateway to
         <name>Case 5: Enterprise Call Center</name>
         <t>A call originates from a mobile user, and a STIR authentication service operated by their carrier creates a PASSporT for the call. As the carrier forwards the call via SIP, it attaches the PASSporT to the SIP call with an Identity header field. As a fallback in case the call will not go end-to-end over SIP, the carrier also stores the PASSporT in a CPS.
         </t>
-        <t>The call is then routed over SIP for a time, before it 
-transitions to the PSTN and ultimately is handled by a legacy PBX at a 
-high-volume call center. The call center supports the out-of-band service, 
-and has a high-volume interface to a CPS to retrieve PASSporTs for incoming 
-calls; agents at the call center use a general purpose computer to manage 
-inbound calls and can receive STIR notifications through it. When the PASSporT 
-arrives at the CPS, it is sent through a subscription/notification interface 
-to a system that can correlate incoming calls with valid PASSporTs. The call 
+        <t>The call is then routed over SIP for a time, before it
+transitions to the PSTN and ultimately is handled by a legacy PBX at a
+high-volume call center. The call center supports the out-of-band service,
+and has a high-volume interface to a CPS to retrieve PASSporTs for incoming
+calls; agents at the call center use a general purpose computer to manage
+inbound calls and can receive STIR notifications through it. When the PASSporT
+arrives at the CPS, it is sent through a subscription/notification interface
+to a system that can correlate incoming calls with valid PASSporTs. The call
 center agent sees that a valid call from the originating number has arrived.
         </t>
       </section>
     </section>
     <section anchor="authz" numbered="true" toc="default">
       <name>Storing and Retrieving PASSporTs</name>
-      <t>The use cases show a variety of entities accessing the CPS to 
-store and retrieve PASSporTs. The question of how the CPS authorizes the 
-storage and retrieval of PASSporTs is thus a key design decision in the architecture. 
-The STIR architecture assumes that service providers and, in some cases, 
-end-user devices will have credentials suitable for attesting authority 
+      <t>The use cases show a variety of entities accessing the CPS to
+store and retrieve PASSporTs. The question of how the CPS authorizes the
+storage and retrieval of PASSporTs is thus a key design decision in the architecture.
+The STIR architecture assumes that service providers and, in some cases,
+end-user devices will have credentials suitable for attesting authority
 over telephone numbers per <xref target="RFC8226" format="default"/>.
-These credentials provide the most obvious way that a CPS can authorize 
-the storage and retrieval of PASSporTs. However, as use cases 3, 4, and 5 
-in <xref target="uses" format="default"/> show, it may sometimes make sense 
-for the entity storing or retrieving PASSporTs to be an intermediary rather 
-than a device associated with either the originating or terminating side of 
-a call; those intermediaries often would not have access to STIR 
-credentials covering the telephone numbers in question. Requiring authorization 
-based on a credential to store PASSporTs is therefore undesirable, though 
-potentially acceptable if sufficient steps are taken to mitigate any privacy 
+These credentials provide the most obvious way that a CPS can authorize
+the storage and retrieval of PASSporTs. However, as use cases 3, 4, and 5
+in <xref target="uses" format="default"/> show, it may sometimes make sense
+for the entity storing or retrieving PASSporTs to be an intermediary rather
+than a device associated with either the originating or terminating side of
+a call; those intermediaries often would not have access to STIR
+credentials covering the telephone numbers in question. Requiring authorization
+based on a credential to store PASSporTs is therefore undesirable, though
+potentially acceptable if sufficient steps are taken to mitigate any privacy
 risk of leaking data.
       </t>
-      <t>It is an explicit design goal of this mechanism to minimize 
+      <t>It is an explicit design goal of this mechanism to minimize
 the potential privacy exposure of using a CPS. Ideally, the out-of-band
- mechanism should not result in a worse privacy situation than in-band 
-STIR <xref target="RFC8224" format="default"/>: for in-band, we might say 
-that a SIP entity is authorized to receive a PASSporT if it is an intermediate 
-or final target of the routing of a SIP request. As the originator of a 
-call cannot necessarily predict the routing path a call will follow, an 
-out-of-band mechanism could conceivably even improve on the privacy story. 
+ mechanism should not result in a worse privacy situation than in-band
+STIR <xref target="RFC8224" format="default"/>: for in-band, we might say
+that a SIP entity is authorized to receive a PASSporT if it is an intermediate
+or final target of the routing of a SIP request. As the originator of a
+call cannot necessarily predict the routing path a call will follow, an
+out-of-band mechanism could conceivably even improve on the privacy story.
       </t>
       <t>Broadly, the architecture recommended here thus is one focused
-on permitting any entity to store encrypted PASSporTs at the CPS, indexed 
-under the called number. PASSporTs will be encrypted with a public key 
-associated with the called number, so these PASSporTs may safely be retrieved 
-by any entity because only holders of the corresponding private key will be 
-able to decrypt the PASSporT.  This also prevents the CPS itself from 
-learning the contents of PASSporTs, and thus metadata about calls in 
-progress, which makes the CPS a less attractive target for pervasive 
-monitoring (see <xref target="RFC7258" format="default"/>). As a first 
-step, transport-level security can provide confidentiality from eavesdroppers 
-for both the storing and retrieval of PASSporTs. To bolster the privacy story, 
-to prevent denial-of-service flooding of the CPS, and to complicate traffic 
+on permitting any entity to store encrypted PASSporTs at the CPS, indexed
+under the called number. PASSporTs will be encrypted with a public key
+associated with the called number, so these PASSporTs may safely be retrieved
+by any entity because only holders of the corresponding private key will be
+able to decrypt the PASSporT.  This also prevents the CPS itself from
+learning the contents of PASSporTs, and thus metadata about calls in
+progress, which makes the CPS a less attractive target for pervasive
+monitoring (see <xref target="RFC7258" format="default"/>). As a first
+step, transport-level security can provide confidentiality from eavesdroppers
+for both the storing and retrieval of PASSporTs. To bolster the privacy story,
+to prevent denial-of-service flooding of the CPS, and to complicate traffic
 analysis, a few additional mechanisms are also recommended below.
       </t>
       <section anchor="stor" numbered="true" toc="default">
         <name>Storage</name>
-        <t>There are a few dimensions to authorizing the storage of PASSporTs. 
-Encrypting PASSporTs prior to storage entails that a CPS has no way to tell 
-if a PASSporT is valid; it simply conveys encrypted blocks that it cannot 
-access itself and can make no authorization decision based on the PASSporT 
-contents. There is certainly no prospect for the CPS to verify the PASSporTs itself. 
+        <t>There are a few dimensions to authorizing the storage of PASSporTs.
+Encrypting PASSporTs prior to storage entails that a CPS has no way to tell
+if a PASSporT is valid; it simply conveys encrypted blocks that it cannot
+access itself and can make no authorization decision based on the PASSporT
+contents. There is certainly no prospect for the CPS to verify the PASSporTs itself.
         </t>
-        <t>Note that this architecture requires clients that store PASSporTs 
-to have access to an encryption key associated with the intended called party 
-to be used to encrypt the PASSporT. Discovering this key requires the existence 
-of a key lookup service (see <xref target="lookup" format="default"/>), 
-depending on how the CPS is architected; however, some kind of key store or 
-repository could be implemented adjacent to it and perhaps even incorporated 
-into its operation. Key discovery is made more complicated by the fact that 
+        <t>Note that this architecture requires clients that store PASSporTs
+to have access to an encryption key associated with the intended called party
+to be used to encrypt the PASSporT. Discovering this key requires the existence
+of a key lookup service (see <xref target="lookup" format="default"/>),
+depending on how the CPS is architected; however, some kind of key store or
+repository could be implemented adjacent to it and perhaps even incorporated
+into its operation. Key discovery is made more complicated by the fact that
 there can potentially be multiple entities that have
- authority over a telephone number: a carrier, a reseller, an enterprise, 
-and an end user might all have credentials permitting them to attest that they 
-are allowed to originate calls from a number, say. PASSporTs for out-of-band use 
-therefore might need to be encrypted with multiple keys in the hopes that one 
+ authority over a telephone number: a carrier, a reseller, an enterprise,
+and an end user might all have credentials permitting them to attest that they
+are allowed to originate calls from a number, say. PASSporTs for out-of-band use
+therefore might need to be encrypted with multiple keys in the hopes that one
 will be decipherable by the relying party.
         </t>
-        <t>Again, the most obvious way to authorize storage is to require 
-the originator to authenticate themselves to the CPS with their STIR credential. 
-However, since the call is indexed at the CPS under the called number, 
-this can weaken the privacy story of the architecture, as it reveals to 
-the CPS both the identity of the caller and the callee. Moreover, it does not work 
-for the gateway use cases described above; to support those use cases, we must 
-effectively allow any entity to store PASSporTs at a CPS. This does not degrade 
-the anti-impersonation security of STIR, because entities who do not possess 
-the necessary credentials to sign the PASSporT will not be able to create 
-PASSporTs that will be treated as valid by verifiers. In this architecture, 
-it does not matter whether the CPS received a PASSporT from the authentication 
-service that created it or from an intermediary gateway downstream in the 
-routing path as in case 4 above. However, if literally anyone can store 
-PASSporTs in the CPS, an attacker could easily flood the CPS with millions 
+        <t>Again, the most obvious way to authorize storage is to require
+the originator to authenticate themselves to the CPS with their STIR credential.
+However, since the call is indexed at the CPS under the called number,
+this can weaken the privacy story of the architecture, as it reveals to
+the CPS both the identity of the caller and the callee. Moreover, it does not work
+for the gateway use cases described above; to support those use cases, we must
+effectively allow any entity to store PASSporTs at a CPS. This does not degrade
+the anti-impersonation security of STIR, because entities who do not possess
+the necessary credentials to sign the PASSporT will not be able to create
+PASSporTs that will be treated as valid by verifiers. In this architecture,
+it does not matter whether the CPS received a PASSporT from the authentication
+service that created it or from an intermediary gateway downstream in the
+routing path as in case 4 above. However, if literally anyone can store
+PASSporTs in the CPS, an attacker could easily flood the CPS with millions
 of bogus PASSporTs indexed under a calling number, and thereby prevent the called
-party from finding a valid PASSporT for an incoming call buried in a haystack of fake entries. 
+party from finding a valid PASSporT for an incoming call buried in a haystack of fake entries.
         </t>
-        <t>The solution architecture must therefore include some sort of traffic 
-control system to prevent flooding. Preferably, this should not require 
-authenticating the source, as this will reveal to the CPS both the source and 
+        <t>The solution architecture must therefore include some sort of traffic
+control system to prevent flooding. Preferably, this should not require
+authenticating the source, as this will reveal to the CPS both the source and
 destination of traffic. A potential solution is discussed below in <xref target="rate-control" format="default"/>.
         </t>
       </section>
       <section anchor="retr" numbered="true" toc="default">
         <name>Retrieval</name>
-        <t>For retrieval of PASSporTs, this architecture assumes that clients will 
-contact the CPS through some sort of polling or notification interface to receive all 
+        <t>For retrieval of PASSporTs, this architecture assumes that clients will
+contact the CPS through some sort of polling or notification interface to receive all
  current PASSporTs for calls destined to a particular telephone number, or block of numbers.
         </t>
-        <t>As PASSporTs stored at the CPS are encrypted with a key belonging 
-to the intended destination, the CPS can safely allow anyone to download PASSporTs 
-for a called number without much fear of compromising private information 
-about calls in progress -- provided that the CPS always returns at least one 
-encrypted blob in response to a request, even if there was no call in progress. 
-Otherwise, entities could poll the CPS constantly, or eavesdrop on traffic, 
-to learn whether or not calls were in progress. The CPS <bcp14>MUST</bcp14> generate 
-at least one unique and plausible encrypted response to all retrieval requests, 
-and these dummy encrypted PASSporTs <bcp14>MUST NOT</bcp14> be repeated for 
-later calls. An encryption scheme needs to be carefully chosen to make messages 
-look indistinguishable from random when encrypted, so that information about the 
+        <t>As PASSporTs stored at the CPS are encrypted with a key belonging
+to the intended destination, the CPS can safely allow anyone to download PASSporTs
+for a called number without much fear of compromising private information
+about calls in progress -- provided that the CPS always returns at least one
+encrypted blob in response to a request, even if there was no call in progress.
+Otherwise, entities could poll the CPS constantly, or eavesdrop on traffic,
+to learn whether or not calls were in progress. The CPS <bcp14>MUST</bcp14> generate
+at least one unique and plausible encrypted response to all retrieval requests,
+and these dummy encrypted PASSporTs <bcp14>MUST NOT</bcp14> be repeated for
+later calls. An encryption scheme needs to be carefully chosen to make messages
+look indistinguishable from random when encrypted, so that information about the
 called party is not discoverable from legitimate encrypted PASSporTs.
         </t>
-        <t>Because the entity placing a call may discover multiple keys 
-associated with the called party number, multiple valid PASSporTs may be 
-stored in the CPS. A particular called party who retrieves PASSporTs from 
-the CPS may have access to only one of those keys. Thus, the presence of 
-one or more PASSporTs that the called party cannot decrypt -- which would 
-be indistinguishable from the "dummy" PASSporTs created by the CPS when 
-no calls are in progress - does not entail that there is no call in progress. 
-A retriever likely will need to decrypt all PASSporTs retrieved from the CPS, 
+        <t>Because the entity placing a call may discover multiple keys
+associated with the called party number, multiple valid PASSporTs may be
+stored in the CPS. A particular called party who retrieves PASSporTs from
+the CPS may have access to only one of those keys. Thus, the presence of
+one or more PASSporTs that the called party cannot decrypt -- which would
+be indistinguishable from the "dummy" PASSporTs created by the CPS when
+no calls are in progress - does not entail that there is no call in progress.
+A retriever likely will need to decrypt all PASSporTs retrieved from the CPS,
 and may find only one that is valid.
         </t>
-        <t>In order to prevent the CPS from learning the numbers that a callee 
-controls, callees might also request PASSporTs for numbers that they do not own, 
-that they have no hope of decrypting. Implementations could even allow a callee 
-to request PASSporTs for a range or prefix of numbers: a trade-off where that 
-callee is willing to sift through bulk quantities of undecryptable PASSporTs 
+        <t>In order to prevent the CPS from learning the numbers that a callee
+controls, callees might also request PASSporTs for numbers that they do not own,
+that they have no hope of decrypting. Implementations could even allow a callee
+to request PASSporTs for a range or prefix of numbers: a trade-off where that
+callee is willing to sift through bulk quantities of undecryptable PASSporTs
 for the sake of hiding from the CPS which numbers it controls.
         </t>
-        <t>Note that in out-of-band call forwarding cases, special behavior is 
-required to manage the relationship between PASSporTs using the diversion 
-extension <xref target="I-D.ietf-stir-passport-divert" format="default"/>. 
-The originating authentication service encrypts the initial PASSporT with the 
-public encryption key of the intended destination, but once a call is forwarded, 
-it may go to a destination that does not possess the corresponding private key 
-and thus could not decrypt the original PASSporT. This requires the retargeting 
-entity to generate encrypted PASSporTs that show a secure chain of diversion: 
-a retargeting storer <bcp14>SHOULD</bcp14> use the "div-o" PASSporT type, 
-with its "opt" extension, as specified in 
-<xref target="I-D.ietf-stir-passport-divert" format="default"/>, in order to nest 
+        <t>Note that in out-of-band call forwarding cases, special behavior is
+required to manage the relationship between PASSporTs using the diversion
+extension <xref target="I-D.ietf-stir-passport-divert" format="default"/>.
+The originating authentication service encrypts the initial PASSporT with the
+public encryption key of the intended destination, but once a call is forwarded,
+it may go to a destination that does not possess the corresponding private key
+and thus could not decrypt the original PASSporT. This requires the retargeting
+entity to generate encrypted PASSporTs that show a secure chain of diversion:
+a retargeting storer <bcp14>SHOULD</bcp14> use the "div-o" PASSporT type,
+with its "opt" extension, as specified in
+<xref target="I-D.ietf-stir-passport-divert" format="default"/>, in order to nest
 the original PASSporT within the encrypted diversion PASSporT.
         </t>
       </section>
@@ -490,18 +490,18 @@ the original PASSporT within the encrypted diversion PASSporT.
         <artwork name="" type="" align="left" alt=""><![CDATA[
 Alice                    Call Placement Service                  Bob
 --------------------------------------------------------------------
-         
+
 Store Encrypted PASSporT for 2.222.555.2222 ->
-         
+
 Call from 1.111.555.1111 ------------------------------------------>
-         
-         
+
+
                                  <-------------- Request PASSporT(s)
                                   for 2.222.555.2222
-         
+
                                  Obtain Encrypted PASSporT -------->
                                     (2.222.555.2222, 1.111.555.1111)
-         
+
                                   [Ring phone with verified callerid
                                                    = 1.111.555.1111]
 ]]></artwork>
@@ -512,14 +512,14 @@ Call from 1.111.555.1111 ------------------------------------------>
         </t>
         <t>When Alice places the call, Bob's phone would usually ring and display
    Alice's number (+1.111.555.1111), which is informed by the existing
-   PSTN mechanisms for relaying a calling party number (e.g., the 
-   Calling Party's Number (CIN) field of 
+   PSTN mechanisms for relaying a calling party number (e.g., the
+   Calling Party's Number (CIN) field of
    the Initial Address Message (IAM)).  Instead,
    Bob's phone transparently contacts the CPS and requests any current
-   PASSporTs for calls to his number.  The CPS responds with any such PASSporTs 
-   (or dummy PASSporTs if no relevant ones are currently stored).  
+   PASSporTs for calls to his number.  The CPS responds with any such PASSporTs
+   (or dummy PASSporTs if no relevant ones are currently stored).
 If such a PASSporT exists, and the verification service in Bob's phone decrypts it using
-   his private key, validates it, then 
+   his private key, validates it, then
    Bob's phone can present the calling party number
    information as valid.  Otherwise, the call is unverifiable.  Note
    that this does not necessarily mean that the call is bogus; because
@@ -535,11 +535,11 @@ If such a PASSporT exists, and the verification service in Bob's phone decrypts 
    scenarios to be concerned with:
         </t>
         <ol spacing="normal" type="1">
-          <li>The attacker wishes to impersonate a target when no call from that 
-	 target is in progress.
-	  	 </li>
+          <li>The attacker wishes to impersonate a target when no call from that
+         target is in progress.
+                 </li>
           <li>The attacker wishes to substitute himself for an existing call setup.
-	</li>
+        </li>
         </ol>
         <t>If an attacker can inject fake PASSporTs into the CPS or in the
    communication from the CPS to the callee, he can mount either attack.
@@ -548,7 +548,7 @@ If such a PASSporT exists, and the verification service in Bob's phone decrypts 
    (see <xref target="phone" format="default"/>), this should not arise in ordinary operations.
    Any attacker who is aware of calls in progress can attempt to mount a race to substitute themselves
    as described in <xref target="sub" format="default"/>. For privacy and robustness reasons,
-   using <xref target="RFC8446" format="default">TLS</xref> on the originating 
+   using <xref target="RFC8446" format="default">TLS</xref> on the originating
    side when storing the PASSporT at the CPS is <bcp14>RECOMMENDED</bcp14>.
         </t>
         <t>The entire system depends on the security of the credential
@@ -602,7 +602,7 @@ If such a PASSporT exists, and the verification service in Bob's phone decrypts 
    waiting.
         </t>
         <t>
-   In order to prevent a passive attacker from using traffic analysis or 
+   In order to prevent a passive attacker from using traffic analysis or
    similar means to learn precisely when a call is placed, it is essential
    that the connection between the caller and the CPS be encrypted as recommended above.
    Authentication services could store dummy PASSporTs at the CPS at random intervals in order
@@ -616,7 +616,7 @@ If such a PASSporT exists, and the verification service in Bob's phone decrypts 
    attempt will reach the target. Also note that the success of this substitution
    attack depends on the attacker landing their call within the narrow window
    that the PASSporT is retained in the CPS, so
-   shortening that window will reduce the 
+   shortening that window will reduce the
    opportunity for the attack. Finally, smart endpoints could implement some sort of
    state coordination to ensure that both sides believe the call is in progress, though
    methods of supporting that are outside the scope of this document.
@@ -624,20 +624,20 @@ If such a PASSporT exists, and the verification service in Bob's phone decrypts 
       </section>
       <section anchor="rate-control" numbered="true" toc="default">
         <name>Rate Control for CPS Storage</name>
-        <t>In order to prevent the flooding of a CPS with bogus PASSporTs, 
-we propose the use of "blind signatures" (see <xref target="RFC5636" format="default"/>). 
-A sender will initially authenticate to the CPS using its STIR credentials 
-and acquire a signed token from the CPS that will be presented later 
+        <t>In order to prevent the flooding of a CPS with bogus PASSporTs,
+we propose the use of "blind signatures" (see <xref target="RFC5636" format="default"/>).
+A sender will initially authenticate to the CPS using its STIR credentials
+and acquire a signed token from the CPS that will be presented later
 when storing a PASSporT. The flow looks as follows:
         </t>
         <artwork name="" type="" align="left" alt=""><![CDATA[
     Sender                                 CPS
-    
+
     Authenticate to CPS --------------------->
     Blinded(K_temp) ------------------------->
     <------------- Sign(K_cps, Blinded(K_temp))
     [Disconnect]
-    
+
 
     Sign(K_cps, K_temp)
     Sign(K_temp, E(K_receiver, PASSporT)) --->
@@ -656,33 +656,33 @@ verify, stores the encrypted passport (discarding the signatures).
         </t>
         <t>
 This design lets the CPS rate limit how many PASSporTs a given
-sender can store just by counting how many times K_temp appears; 
-perhaps CPS policy might reject storage attempts and require acquisition 
-of a new K_temp after storing more than a certain number of PASSporTs 
-indexed under the same destination number in a short interval. 
-This does not, of course, allow the CPS to tell when bogus data 
+sender can store just by counting how many times K_temp appears;
+perhaps CPS policy might reject storage attempts and require acquisition
+of a new K_temp after storing more than a certain number of PASSporTs
+indexed under the same destination number in a short interval.
+This does not, of course, allow the CPS to tell when bogus data
 is being provisioned by an attacker,
-simply the rate at which data is being provisioned. Potentially, 
-feedback mechanisms could be developed that would allow the called 
+simply the rate at which data is being provisioned. Potentially,
+feedback mechanisms could be developed that would allow the called
 parties to tell the CPS when they are receiving unusual or bogus
 PASSporTs.
         </t>
         <t>
-This architecture also assumes that the CPS will age out PASSporTs. 
-A CPS <bcp14>SHOULD NOT</bcp14> keep any stored PASSporT for longer 
-than the recommended freshness 
-policy for the "iat" value as described in 
-<xref target="RFC8224" format="default"/> (i.e., sixty seconds) 
+This architecture also assumes that the CPS will age out PASSporTs.
+A CPS <bcp14>SHOULD NOT</bcp14> keep any stored PASSporT for longer
+than the recommended freshness
+policy for the "iat" value as described in
+<xref target="RFC8224" format="default"/> (i.e., sixty seconds)
 unless some local policy for a CPS deployment requires a longer or shorter interval.
-Any reduction in this window makes substitution attacks 
-(see <xref target="sub" format="default"/>) harder to mount, 
-but making the window too small might conceivably age PASSporTs out 
+Any reduction in this window makes substitution attacks
+(see <xref target="sub" format="default"/>) harder to mount,
+but making the window too small might conceivably age PASSporTs out
 while a heavily redirected call is still alerting.
 </t>
         <t>
-An alternative potential approach to blind signatures would be 
-the use of verifiable oblivious pseudorandom functions (VOPRFs, per 
-<xref target="I-D.privacy-pass" format="default"/>), which may prove faster. 
+An alternative potential approach to blind signatures would be
+the use of verifiable oblivious pseudorandom functions (VOPRFs, per
+<xref target="I-D.privacy-pass" format="default"/>), which may prove faster.
         </t>
       </section>
     </section>
@@ -701,46 +701,46 @@ Out-of-band authentication services perform steps similar to those defined in <x
 Step 1: The authentication service <bcp14>MUST</bcp14> determine whether it is
     authoritative for the identity of the originator of the request, that is, the identity it will populate in the "orig" claim of the PASSporT.
 It can do so only if it possesses the private key of one or more credentials that can be used
-    to sign for that identity, be it a domain or a telephone number or some other identifier. For example, the authentication service could hold the private key associated with a <xref target="RFC8225" format="default">STIR certificate</xref>. 
+    to sign for that identity, be it a domain or a telephone number or some other identifier. For example, the authentication service could hold the private key associated with a <xref target="RFC8225" format="default">STIR certificate</xref>.
         </t>
         <t>
-Step 2: The authentication service <bcp14>MUST</bcp14> determine that the 
+Step 2: The authentication service <bcp14>MUST</bcp14> determine that the
 originator of communications can claim the originating identity. This is a policy
-decision made by the authentication service that depends on its relationship to 
+decision made by the authentication service that depends on its relationship to
 the originator. For an out-of-band application built into the
-calling device, for example, this is the same check performed in Step 1: does the 
+calling device, for example, this is the same check performed in Step 1: does the
 calling device hold a private key, one corresponding to a STIR certificate,
 that can sign for the originating identity?
         </t>
         <t anchor="as-step3">
-Step 3: The authentication service <bcp14>MUST</bcp14> acquire the public encryption key 
-of the destination, which will be used to encrypt the PASSporT (see <xref target="lookup" format="default"/>). 
+Step 3: The authentication service <bcp14>MUST</bcp14> acquire the public encryption key
+of the destination, which will be used to encrypt the PASSporT (see <xref target="lookup" format="default"/>).
 It <bcp14>MUST</bcp14> also discover (see <xref target="cps" format="default"/>)
 the CPS associated with the destination. The authentication service
-may already have the encryption key and destination CPS cached, or may need 
-to query a service to acquire the key. Note that per <xref target="rate-control" format="default"/>, 
-the authentication service may also need to acquire a token for PASSporT 
-storage from the CPS upon CPS discovery. It is anticipated that the discovery mechanism 
+may already have the encryption key and destination CPS cached, or may need
+to query a service to acquire the key. Note that per <xref target="rate-control" format="default"/>,
+the authentication service may also need to acquire a token for PASSporT
+storage from the CPS upon CPS discovery. It is anticipated that the discovery mechanism
 (see <xref target="cps" format="default"/>) used to find the appropriate
-CPS will also find the proper key server for the public key of the destination. 
-In some cases, a destination may have multiple public encryption keys associated with it. 
+CPS will also find the proper key server for the public key of the destination.
+In some cases, a destination may have multiple public encryption keys associated with it.
 In that case, the authentication service <bcp14>MUST</bcp14> collect all of those keys.
         </t>
-        <t>	
+        <t>
 Step 4: The authentication service <bcp14>MUST</bcp14> create the PASSporT object. This includes acquiring the system time to populate the "iat" claim, and populating the "orig" and "dest" claims as
 described in <xref target="RFC8225" format="default"/>. The authentication service <bcp14>MUST</bcp14> then encrypt the PASSporT. If in Step 3 the authentication service discovered multiple public keys for the destination, it
-	<bcp14>MUST</bcp14> create one encrypted copy for each public key it discovered.
+        <bcp14>MUST</bcp14> create one encrypted copy for each public key it discovered.
         </t>
         <t>
-Finally, the authentication service stores the encrypted PASSporT(s) at the CPS 
-discovered in Step 3. Only after that is completed should any call be initiated. 
+Finally, the authentication service stores the encrypted PASSporT(s) at the CPS
+discovered in Step 3. Only after that is completed should any call be initiated.
 Note that a call might be initiated over SIP, and the authentication
-service would place the same PASSporT in the Identity header field value of the SIP request -- 
-though SIP would carry a cleartext version rather than an encrypted version 
-sent to the CPS. In that case, out-of-band would serve as a fallback mechanism 
-if the request was not conveyed over SIP end-to-end. Also, note that the 
-authentication service <bcp14>MAY</bcp14> use a compact form of the PASSporT 
-for a SIP request, whereas the version stored at the CPS <bcp14>MUST</bcp14> 
+service would place the same PASSporT in the Identity header field value of the SIP request --
+though SIP would carry a cleartext version rather than an encrypted version
+sent to the CPS. In that case, out-of-band would serve as a fallback mechanism
+if the request was not conveyed over SIP end-to-end. Also, note that the
+authentication service <bcp14>MAY</bcp14> use a compact form of the PASSporT
+for a SIP request, whereas the version stored at the CPS <bcp14>MUST</bcp14>
 always be a full-form PASSporT.
         </t>
       </section>
@@ -783,13 +783,13 @@ Finally, the verification service will end up with one or more valid PASSporTs c
 The STIR out-of-band mechanism also supports the presence of gateway placement services, which do not create PASSporTs themselves, but instead take PASSporTs out of signaling protocols and store them at a CPS before gatewaying to a protocol that cannot carry PASSporTs itself. For example, a SIP gateway that sends calls to the PSTN could receive a call with an Identity header field, extract a PASSporT from the Identity header field, and store that PASSporT at a CPS.
         </t>
         <t>
-To place a PASSporT at a CPS, a gateway <bcp14>MUST</bcp14> perform 
-<xref target="as-step3" format="none">Step 3</xref> of <xref target="as" format="default"/> above: 
-that is, it must discover the CPS and public key associated with the 
-destination of the call, and may need to acquire a PASSporT storage token 
-(see <xref target="stor" format="default"/>). Per <xref target="as-step3" format="none">Step 3</xref> 
-of <xref target="as" format="default"/>, this may entail discovering several keys. 
-The gateway then collects the in-band PASSporT(s) from the in-band signaling, 
+To place a PASSporT at a CPS, a gateway <bcp14>MUST</bcp14> perform
+<xref target="as-step3" format="none">Step 3</xref> of <xref target="as" format="default"/> above:
+that is, it must discover the CPS and public key associated with the
+destination of the call, and may need to acquire a PASSporT storage token
+(see <xref target="stor" format="default"/>). Per <xref target="as-step3" format="none">Step 3</xref>
+of <xref target="as" format="default"/>, this may entail discovering several keys.
+The gateway then collects the in-band PASSporT(s) from the in-band signaling,
 encrypts the PASSporT(s), and stores them at the CPS.
         </t>
         <t>
@@ -800,13 +800,13 @@ A similar service could be performed by a gateway that retrieves PASSporTs from 
     <section anchor="web" numbered="true" toc="default">
       <name>Example HTTPS Interface to the CPS</name>
       <t>
-As a rough example, we show a CPS implementation here that uses a 
-Representational State Transfer (REST) API <xref target="REST"/> to store and retrieve objects at the CPS. 
+As a rough example, we show a CPS implementation here that uses a
+Representational State Transfer (REST) API <xref target="REST"/> to store and retrieve objects at the CPS.
 The calling party stores the PASSporT at the CPS prior to initiating the call; the
-PASSporT is stored at a location at the CPS that corresponds to the called number. 
+PASSporT is stored at a location at the CPS that corresponds to the called number.
 Note that it is possible for multiple parties to be calling a number at the same time, and that for called
-numbers such as large call centers, many PASSporTs could legitimately be stored 
-simultaneously, and it might prove difficult to correlate these with incoming calls. 
+numbers such as large call centers, many PASSporTs could legitimately be stored
+simultaneously, and it might prove difficult to correlate these with incoming calls.
       </t>
       <t>
 Assume that an authentication service has created the following PASSporT for a call to the telephone number 2.222.555.2222 (note that these are dummy values):
@@ -826,12 +826,12 @@ Through some discovery mechanism (see <xref target="cps" format="default"/>), th
    MKW0YzI4LJ1joTHho3WaY3Oup3Ajo3W0YzAypvW9rlWxMKA0Vwc7VaIlnFV6JlWm
    nKN6LJkcL2INMKuuoKOfMF5wo20vKK0fVzyuqPV6VwR0AQZlZQtmAQHvYPWipzyaV
    wc7VaEhVwbvZGVkAGH1AGRlZGVvsK0ed3cwG1ubEjnxRTwUPaJFjHafuq0-mW6S1
-   IBtSJFwUOe8Dwcwyx-pcSLcSLfbwAPcGmB3DsCBypxTnF6uRpx7j	
+   IBtSJFwUOe8Dwcwyx-pcSLcSLfbwAPcGmB3DsCBypxTnF6uRpx7j
 ]]></artwork>
       <t>
-Having concluded the numbered steps in <xref target="as" format="default"/>, including acquiring any token (per <xref target="stor" format="default"/>) needed to store the PASSporT at the CPS, the authentication service then stores the encrypted PASSporT: 
+Having concluded the numbered steps in <xref target="as" format="default"/>, including acquiring any token (per <xref target="stor" format="default"/>) needed to store the PASSporT at the CPS, the authentication service then stores the encrypted PASSporT:
       </t>
-      <artwork name="" type="" align="left" alt=""><![CDATA[	
+      <artwork name="" type="" align="left" alt=""><![CDATA[
    POST /cps/2.222.555.2222/ppts HTTP/1.1
    Host: cps.example.com
    Content-Type: application/passport
@@ -844,10 +844,10 @@ Having concluded the numbered steps in <xref target="as" format="default"/>, inc
 ]]></artwork>
       <t>
 The web service assigns a new location for this encrypted PASSporT in the collection, returning a 201 OK with the location of /cps/2.222.222.2222/ppts/ppt1.
-Now the authentication service can place the call, which may be signaled by various protocols. Once the call arrives at the terminating side, a verification service 
+Now the authentication service can place the call, which may be signaled by various protocols. Once the call arrives at the terminating side, a verification service
 contacts its CPS to ask for the set of incoming calls for its telephone number (2.222.222.2222).
       </t>
-      <artwork name="" type="" align="left" alt=""><![CDATA[	
+      <artwork name="" type="" align="left" alt=""><![CDATA[
    GET /cps/2.222.555.2222/ppts
    Host: cps.example.com
 ]]></artwork>
@@ -855,11 +855,11 @@ contacts its CPS to ask for the set of incoming calls for its telephone number (
  This returns to the verification service a list of the PASSporTs currently in the collection, which currently consists of only /cps/2.222.222.2222/ppts/ppt1. The verification
  service then sends a new GET for /cps/2.222.555.2222/ppts/ppt1/ which yields:
       </t>
-      <artwork name="" type="" align="left" alt=""><![CDATA[	
+      <artwork name="" type="" align="left" alt=""><![CDATA[
    HTTP/1.1 200 OK
    Content-Type: application/passport
    Link: <https://cps.example.com/cps/2.222.555.2222/ppts>
-	
+
    rlWuoTpvBvWSHmV1AvVfVaE5pPV6VaOup3Ajo3W0VvjvrQI1VwbvnUE0pUZ6Yl9w
    MKW0YzI4LJ1joTHho3WaY3Oup3Ajo3W0YzAypvW9rlWxMKA0Vwc7VaIlnFV6JlWm
    nKN6LJkcL2INMKuuoKOfMF5wo20vKK0fVzyuqPV6VwR0AQZlZQtmAQHvYPWipzyaV
@@ -867,7 +867,7 @@ contacts its CPS to ask for the set of incoming calls for its telephone number (
    IBtSJFwUOe8Dwcwyx-pcSLcSLfbwAPcGmB3DsCBypxTnF6uRpx7j
 ]]></artwork>
       <t>
- That concludes <xref target="vs-step1" format="none">Step 1</xref> of <xref target="vs" format="default"/>; the verification service then goes on to the next step, processing that PASSporT through its various checks. A complete protocol description for CPS interactions is left to future work. 
+ That concludes <xref target="vs-step1" format="none">Step 1</xref> of <xref target="vs" format="default"/>; the verification service then goes on to the next step, processing that PASSporT through its various checks. A complete protocol description for CPS interactions is left to future work.
       </t>
     </section>
     <section anchor="cps" numbered="true" toc="default">
@@ -883,9 +883,9 @@ this purpose. The means of service discovery may vary by use case.
  Although the discussion above is written largely in terms of a single CPS, having a significant fraction of all telephone calls result in storing and retrieving PASSporTs at a single monolithic CPS
     has obvious scaling problems, and would as well allow the CPS to
     gather metadata about a very wide set of callers and callees.  These issues can be alleviated by operational models with a
-   federated CPS; any service discovery mechanism for out-of-band STIR 
+   federated CPS; any service discovery mechanism for out-of-band STIR
 should enable federation of the CPS function. Likely models include ones
-   where a carrier operates one or more CPS instances on behalf of its customers, 
+   where a carrier operates one or more CPS instances on behalf of its customers,
 an enterprise runs a CPS instance on behalf of its PBX users, or a third-party service provider
 offers a CPS as a cloud service.
       </t>
@@ -899,35 +899,35 @@ offers a CPS as a cloud service.
           </li>
         <li>
    If a credential lookup service is already available (see <xref target="lookup" format="default"/>),
-   the CPS location can also be recorded in the callee's credentials; 
-an extension to <xref target="RFC8226" format="default"/> could, for example, 
+   the CPS location can also be recorded in the callee's credentials;
+an extension to <xref target="RFC8226" format="default"/> could, for example,
 provide a link to the location of the CPS
    where PASSporTs should be stored for a destination.
    </li>
         <li>
-There exist a number of common directory systems that might be used to translate 
-telephone numbers into the URIs of a CPS. 
+There exist a number of common directory systems that might be used to translate
+telephone numbers into the URIs of a CPS.
 <xref target="RFC6116" format="default">ENUM</xref> is commonly implemented,
-though no "golden root" central ENUM administration exists that could be easily 
-reused today to help the endpoints discover a common CPS. Other protocols associated 
-with queries for telephone numbers, such as the 
-<xref target="I-D.ietf-modern-teri" format="default">Telephone-Related Information (TeRI) protocol</xref>, 
+though no "golden root" central ENUM administration exists that could be easily
+reused today to help the endpoints discover a common CPS. Other protocols associated
+with queries for telephone numbers, such as the
+<xref target="I-D.ietf-modern-teri" format="default">Telephone-Related Information (TeRI) protocol</xref>,
 could also serve for this application.
-	</li>
+        </li>
         <li>
-Another possibility is to use a single distributed service for this function. 
+Another possibility is to use a single distributed service for this function.
 <xref target="I-D.jennings-vipr-overview" format="default">Verification Involving PSTN Reachability (VIPR)</xref> proposed a
 <xref target="RFC6940" format="default">REsource LOcation And Discovery (RELOAD)</xref> usage for telephone numbers to help direct calls to enterprises on the Internet. It would be possible to describe a similar RELOAD usage
-to identify the CPS where calls for a particular telephone number should be stored. 
+to identify the CPS where calls for a particular telephone number should be stored.
 One advantage that the STIR architecture has over VIPR is that it assumes a credential system
-that proves authority over telephone numbers; those credentials could be used to determine 
+that proves authority over telephone numbers; those credentials could be used to determine
 whether or not a CPS could legitimately claim to be the proper store for a given telephone
 number.
     </li>
       </ul>
       <t>
-This document does not prescribe any single way to do service discovery for a CPS; 
-it is envisioned that initial deployments will provision the location of the CPS 
+This document does not prescribe any single way to do service discovery for a CPS;
+it is envisioned that initial deployments will provision the location of the CPS
 at the authentication service and verification service.
       </t>
     </section>
@@ -935,26 +935,26 @@ at the authentication service and verification service.
       <name>Encryption Key Lookup</name>
       <t>
    In order to encrypt a PASSporT (see <xref target="stor" format="default"/>), the caller needs access to the callee's
-   public encryption key. Note that because STIR uses the Elliptic Curve Digital Signature Algorithm (ECDSA) 
+   public encryption key. Note that because STIR uses the Elliptic Curve Digital Signature Algorithm (ECDSA)
    for signing PASSporTs, the public key used to
-   verify PASSporTs is not suitable for this function, and thus the encryption key 
+   verify PASSporTs is not suitable for this function, and thus the encryption key
    must be discovered separately. This requires some sort
    of directory/lookup system.
       </t>
       <t>
    Some initial STIR deployments have fielded certificate repositories so that verification services
-can acquire the signing credentials for PASSporTs, which are linked through a URI in the "x5u" element of the PASSporT. 
+can acquire the signing credentials for PASSporTs, which are linked through a URI in the "x5u" element of the PASSporT.
 These certificate repositories could clearly be repurposed for allowing authentication services to download
 the public encryption key for the called party -- provided they can be discovered by calling parties.
    This document does not specify any
    particular discovery scheme, but instead offers some general guidance about potential approaches.
       </t>
       <t>
-   It is a desirable property that the public encryption key for a given party 
-be linked to their STIR credential. An <xref target="RFC7748" format="default">Elliptic Curve Diffie-Hellman (ECDH)</xref> 
-public-private key pair might be generated for a 
-<xref target="I-D.ietf-tls-subcerts" format="default">subcert</xref> of the STIR credential. 
-That subcert could be looked up along with the STIR credential of the called party. 
+   It is a desirable property that the public encryption key for a given party
+be linked to their STIR credential. An <xref target="RFC7748" format="default">Elliptic Curve Diffie-Hellman (ECDH)</xref>
+public-private key pair might be generated for a
+<xref target="I-D.ietf-tls-subcerts" format="default">subcert</xref> of the STIR credential.
+That subcert could be looked up along with the STIR credential of the called party.
 Further details of this subcert, and the exact lookup mechanism involved, are deferred for future protocol work.
       </t>
       <t>
@@ -968,17 +968,17 @@ Further details of this subcert, and the exact lookup mechanism involved, are de
         <li>
  Have endpoints pre-fetch keys for potential counterparties
       (e.g., their address book or the entire database).
-	  	 </li>
+                 </li>
         <li>
   Have caching servers in the user's network that proxy their
       fetches and thus conceal the relationship between the user and the
       keys they are fetching.
-	</li>
+        </li>
       </ul>
       <t>
   Clearly, there is a privacy/timeliness trade-off in that getting
     up-to-date knowledge about credential validity requires
-   contacting the credential directory in real-time (e.g., via the 
+   contacting the credential directory in real-time (e.g., via the
    <xref target="RFC6960" format="default">Online Certificate Status Protocol (OCSP)</xref>).
    This is somewhat mitigated for the caller's credentials in that he
    can get short-term credentials right before placing a call which only
@@ -1002,56 +1002,56 @@ Further details of this subcert, and the exact lookup mechanism involved, are de
     <section anchor="priv" numbered="true" toc="default">
       <name>Privacy Considerations</name>
       <t>
-    Delivering PASSporTs out-of-band offers a different set of privacy properties 
+    Delivering PASSporTs out-of-band offers a different set of privacy properties
 than traditional in-band STIR. In-band operations convey
-PASSporTs as headers in SIP messages in cleartext, which any 
+PASSporTs as headers in SIP messages in cleartext, which any
 forwarding intermediaries can potentially inspect. By contrast, out-of-band
-    STIR stores these PASSporTs at a service after encrypting them 
+    STIR stores these PASSporTs at a service after encrypting them
 as described in <xref target="authz" format="default"/>, effectively creating a path
-    between the authentication and verification service in which the CPS 
+    between the authentication and verification service in which the CPS
 is the sole intermediary, but the CPS cannot read the PASSporTs.
     Potentially, out-of-band PASSporT delivery could thus improve on the privacy story of STIR.
       </t>
       <t>
-    The principle actors in the operation of out-of-band are the 
-AS, VS, and CPS. The 
-AS and VS functions differ from baseline behavior <xref target="RFC8224" format="default"/>, 
-in that they interact with a CPS over a non-SIP interface, 
-of which the REST interface in <xref target="web" format="default"/> serves as an example. 
-Some out-of-band deployments may also require a discovery service for the 
-CPS itself (<xref target="cps" format="default"/>) and/or encryption keys 
-(<xref target="lookup" format="default"/>). Even with encrypted PASSporTs, 
-the network interactions by which the AS and VS interact with the CPS, and 
-to a lesser extent any discovery services, thus create potential opportunities 
+    The principle actors in the operation of out-of-band are the
+AS, VS, and CPS. The
+AS and VS functions differ from baseline behavior <xref target="RFC8224" format="default"/>,
+in that they interact with a CPS over a non-SIP interface,
+of which the REST interface in <xref target="web" format="default"/> serves as an example.
+Some out-of-band deployments may also require a discovery service for the
+CPS itself (<xref target="cps" format="default"/>) and/or encryption keys
+(<xref target="lookup" format="default"/>). Even with encrypted PASSporTs,
+the network interactions by which the AS and VS interact with the CPS, and
+to a lesser extent any discovery services, thus create potential opportunities
 for data leakage about calling and called parties.
       </t>
       <t>
-    The process of storing and retrieving PASSporTs at a CPS can itself 
+    The process of storing and retrieving PASSporTs at a CPS can itself
 reveal information about calls being placed. The mechanism takes
-    care not to require that the AS authenticate itself to the CPS, 
-relying instead on a blind signature mechanism for flood control prevention. 
+    care not to require that the AS authenticate itself to the CPS,
+relying instead on a blind signature mechanism for flood control prevention.
 <xref target="sub" format="default"/>
-    discusses the practice of storing "dummy" PASSporTs at random intervals 
+    discusses the practice of storing "dummy" PASSporTs at random intervals
 to thwart traffic analysis, and as <xref target="vs" format="default"/> notes, a CPS is required to
-    return a dummy PASSporT even if there is no PASSporT indexed for 
+    return a dummy PASSporT even if there is no PASSporT indexed for
 that calling number, which similarly enables the retrieval side to
-    randomly request PASSporTs when there are no calls in progress. 
-These measures can help to mitigate information disclosure in the system. 
-In implementations that require service discovery 
-(see <xref target="cps" format="default"/>), perhaps through key discovery 
-(<xref target="lookup" format="default"/>), similar measures could be used 
+    randomly request PASSporTs when there are no calls in progress.
+These measures can help to mitigate information disclosure in the system.
+In implementations that require service discovery
+(see <xref target="cps" format="default"/>), perhaps through key discovery
+(<xref target="lookup" format="default"/>), similar measures could be used
 to make sure that service discovery does not itself disclose information about calls.
       </t>
       <t>
-    Ultimately, this document only provides a framework for future implementation 
-of out-of-band systems, and the privacy properties of a given implementation will 
-depend on architectural assumptions made in those environments. More closed 
-systems for intranet operations may adopt a weaker security posture but 
-otherwise mitigate the risks of information disclosure, whereas more open environments 
+    Ultimately, this document only provides a framework for future implementation
+of out-of-band systems, and the privacy properties of a given implementation will
+depend on architectural assumptions made in those environments. More closed
+systems for intranet operations may adopt a weaker security posture but
+otherwise mitigate the risks of information disclosure, whereas more open environments
 will require careful implementation of the practices described here.
       </t>
       <t>
-    For general privacy risks associated with the operations of STIR, 
+    For general privacy risks associated with the operations of STIR,
 also see the privacy considerations covered in <xref target="RFC8224" section="11" sectionFormat="of" format="default"/>.
       </t>
     </section>
@@ -1059,17 +1059,17 @@ also see the privacy considerations covered in <xref target="RFC8224" section="1
       <name>Security Considerations</name>
       <t>This entire document is about security, but the detailed security
    properties will vary depending on how the framework is applied and deployed. General guidance for dealing
-      with the most obvious security challenges posed by this framework is given in 
-Sections <xref target="sec" format="counter"/> and <xref target="sub" format="counter"/>, 
+      with the most obvious security challenges posed by this framework is given in
+Sections <xref target="sec" format="counter"/> and <xref target="sub" format="counter"/>,
 along proposed solutions for problems like denial-of-service attacks or traffic analysis against the CPS.</t>
-      <t>Although there are considerable security challenges associated with 
-widespread deployment of a public CPS, those must be weighed against the 
-potential usefulness of a service that delivers a STIR assurance without 
-requiring the passage of end-to-end SIP. Ultimately, the security properties 
-of this mechanism are at least comparable to in-band 
-  STIR: the substitution attack documented in <xref target="sub" format="default"/> 
-could be implemented by any in-band SIP intermediary or eavesdropper who 
-happened to see the PASSporT in transit, say, and launched its own call with a 
+      <t>Although there are considerable security challenges associated with
+widespread deployment of a public CPS, those must be weighed against the
+potential usefulness of a service that delivers a STIR assurance without
+requiring the passage of end-to-end SIP. Ultimately, the security properties
+of this mechanism are at least comparable to in-band
+  STIR: the substitution attack documented in <xref target="sub" format="default"/>
+could be implemented by any in-band SIP intermediary or eavesdropper who
+happened to see the PASSporT in transit, say, and launched its own call with a
 copy of that PASSporT to race against the original to the destination.
       </t>
     </section>
@@ -1134,12 +1134,12 @@ copy of that PASSporT to race against the original to the destination.
     <section anchor="Acknowledgments" numbered="false" toc="default">
       <name>Acknowledgments</name>
       <t>The ideas
-   in this document came out of discussions with <contact fullname="Richard Barnes"/> and 
-   <contact fullname="Cullen Jennings"/>. We'd also like to thank 
-   <contact fullname="Russ Housley"/>, <contact fullname="Chris Wendt"/>, 
-   <contact fullname="Eric Burger"/>, <contact fullname="Mary Barnes"/>, 
+   in this document came out of discussions with <contact fullname="Richard Barnes"/> and
+   <contact fullname="Cullen Jennings"/>. We'd also like to thank
+   <contact fullname="Russ Housley"/>, <contact fullname="Chris Wendt"/>,
+   <contact fullname="Eric Burger"/>, <contact fullname="Mary Barnes"/>,
    <contact fullname="Ben Campbell"/>, <contact fullname="Ted Huang"/>,
-   <contact fullname="Jonathan Rosenberg"/>, and <contact fullname="Robert Sparks"/> 
+   <contact fullname="Jonathan Rosenberg"/>, and <contact fullname="Robert Sparks"/>
    for helpful suggestions.</t>
     </section>
   </back>
