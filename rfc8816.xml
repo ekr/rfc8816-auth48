@@ -1035,7 +1035,11 @@ relying instead on a blind signature mechanism for flood control prevention.
 to thwart traffic analysis, and as <xref target="vs" format="default"/> notes, a CPS is required to
     return a dummy PASSporT even if there is no PASSporT indexed for
 that calling number, which similarly enables the retrieval side to
-    randomly request PASSporTs when there are no calls in progress.
+randomly request PASSporTs when there are no calls in progress.
+Note that the caller's IP address itself leaks information about the caller.
+Proxying the storage of the CPS through some third party could help prevent
+this attack. It might also be possible to use a more sophisticated system
+such as Riposte [RFCED: Reference to https://people.csail.mit.edu/henrycg/pubs/oakland15riposte/].
 These measures can help to mitigate information disclosure in the system.
 In implementations that require service discovery
 (see <xref target="cps" format="default"/>), perhaps through key discovery
