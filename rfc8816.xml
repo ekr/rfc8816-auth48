@@ -1039,7 +1039,7 @@ randomly request PASSporTs when there are no calls in progress.
 Note that the caller's IP address itself leaks information about the caller.
 Proxying the storage of the CPS through some third party could help prevent
 this attack. It might also be possible to use a more sophisticated system
-such as Riposte [RFCED: Reference to https://people.csail.mit.edu/henrycg/pubs/oakland15riposte/].
+such as Riposte <xref target="RIPOSTE" format="default"/>.
 These measures can help to mitigate information disclosure in the system.
 In implementations that require service discovery
 (see <xref target="cps" format="default"/>), perhaps through key discovery
@@ -1131,6 +1131,23 @@ copy of that PASSporT to race against the original to the destination.
     </front>
     <seriesInfo name='Ph.D. Dissertation,' value='University of California, Irvine' />
     <format type="pdf" target='http://www.ics.uci.edu/~fielding/pubs/dissertation/fielding_dissertation.pdf'/>
+</reference>
+
+<reference anchor='RIPOSTE' target="https://people.csail.mit.edu/henrycg/pubs/oakland15riposte/">
+   <front>
+      <title>Riposte: An Anonymous Messaging System Handling Millions of Users
+      </title>
+      <author initials='H' surname='Corrigan-Gibbs' fullname='Henry Corrigan-Gibbs'>
+         <organization />
+      </author>
+      <author initials='D' surname='Boneh' fullname='Dan Boneh'>
+         <organization />
+      </author>
+      <author initials='D' surname='Mazières' fullname='David Mazières'>
+         <organization />
+      </author>
+      <date year='2015' month='May'/>
+   </front>
 </reference>
 
     </references>
